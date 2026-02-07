@@ -1,15 +1,14 @@
 package com.example.vectorscan
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,15 +22,32 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    CameraScreen(
-                        onImageCaptured = { uri ->
-                            // TODO: Navigate to processing screen
-                            android.widget.Toast.makeText(this, "Captured: $uri", android.widget.Toast.LENGTH_SHORT).show()
-                        }
-                    )
+                    VectorScanApp()
                 }
             }
         }
+    }
+}
+
+@Composable
+fun VectorScanApp() {
+    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
+    
+    if (capturedImageUri == null) {
+        // Show camera screen
+        CameraScreen(
+            onImageCaptured = { uri ->
+                capturedImageUri = uri
+            }
+        )
+    } else {
+        // Show processing screen
+        ProcessingScreen(
+            imageUri = capturedImageUri!!,
+            onBack = {
+                capturedImageUri = null
+            }
+        )
     }
 }
 
