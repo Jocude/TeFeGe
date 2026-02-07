@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.vectorscan.app-mergeDebugResources-52:/values-land/values-land.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\jorge\\.gradle\\caches\\9.0-milestone-1\\transforms\\d5e6b4942e1e914b2f148e60a3c9a22f\\transformed\\appcompat-1.1.0\\res\\values-land\\values-land.xml",
+                    "from": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,125,196",
+                        "endColumns": "69,70,67",
+                        "endOffsets": "120,191,259"
+                    }
+                }
+            ]
+        }
+    ]
+}
