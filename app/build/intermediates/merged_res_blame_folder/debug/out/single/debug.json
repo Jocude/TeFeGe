@@ -1,10 +1,26 @@
 [
     {
-        "merged": "com.example.vectorscan.app-merged_res-54:/xml_data_extraction_rules.xml.flat",
-        "source": "com.example.vectorscan.app-main-56:/xml/data_extraction_rules.xml"
+        "merged": "com.example.vectorscan.app-merged_res-31:/xml_data_extraction_rules.xml.flat",
+        "source": "com.example.vectorscan.app-main-33:/xml/data_extraction_rules.xml"
     },
     {
-        "merged": "com.example.vectorscan.app-merged_res-54:/xml_backup_rules.xml.flat",
-        "source": "com.example.vectorscan.app-main-56:/xml/backup_rules.xml"
+        "merged": "com.example.vectorscan.app-merged_res-31:/xml_file_paths.xml.flat",
+        "source": "com.example.vectorscan.app-main-33:/xml/file_paths.xml"
+    },
+    {
+        "merged": "com.example.vectorscan.app-merged_res-31:/layout_dialog_register.xml.flat",
+        "source": "com.example.vectorscan.app-main-33:/layout/dialog_register.xml"
+    },
+    {
+        "merged": "com.example.vectorscan.app-merged_res-31:/layout_activity_home.xml.flat",
+        "source": "com.example.vectorscan.app-main-33:/layout/activity_home.xml"
+    },
+    {
+        "merged": "com.example.vectorscan.app-merged_res-31:/layout_activity_login.xml.flat",
+        "source": "com.example.vectorscan.app-main-33:/layout/activity_login.xml"
+    },
+    {
+        "merged": "com.example.vectorscan.app-merged_res-31:/xml_backup_rules.xml.flat",
+        "source": "com.example.vectorscan.app-main-33:/xml/backup_rules.xml"
     }
 ]

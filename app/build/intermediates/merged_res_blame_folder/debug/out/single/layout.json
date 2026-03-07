@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "com.example.vectorscan.app-mergeDebugResources-30:/layout/activity_home.xml",
+        "source": "com.example.vectorscan.app-main-33:/layout/activity_home.xml"
+    },
+    {
+        "merged": "com.example.vectorscan.app-mergeDebugResources-30:/layout/activity_login.xml",
+        "source": "com.example.vectorscan.app-main-33:/layout/activity_login.xml"
+    },
+    {
+        "merged": "com.example.vectorscan.app-mergeDebugResources-30:/layout/dialog_register.xml",
+        "source": "com.example.vectorscan.app-main-33:/layout/dialog_register.xml"
+    }
+]

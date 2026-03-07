@@ -13,19 +13,13 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
 
     <permission
         android:name="com.example.vectorscan.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.example.vectorscan.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-    <!--
- Android 10+ uses scoped storage, so we generally don't need raw filesystem access permissions for app-specific dirs, 
-         but might need it for specific public exports if not using SAF.
-    -->
+
     <application
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -38,10 +32,22 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/Theme.VectorScan" >
+
+        <!-- FileProvider for camera photos -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.vectorscan.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- Login Screen (Launcher) -->
         <activity
-            android:name="com.example.vectorscan.MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.VectorScan" >
+            android:name="com.example.vectorscan.LoginActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,21 +55,10 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name="androidx.camera.core.impl.MetadataHolderService"
-            android:enabled="false"
-            android:exported="false" >
-            <meta-data
-                android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
-                android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
-        </service>
-
+        <!-- Home Screen -->
         <activity
-            android:name="androidx.activity.ComponentActivity"
-            android:exported="true" />
-        <activity
-            android:name="androidx.compose.ui.tooling.PreviewActivity"
-            android:exported="true" />
+            android:name="com.example.vectorscan.HomeActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"

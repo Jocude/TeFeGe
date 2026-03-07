@@ -1,6 +1,24 @@
 R_DEF: Internal format may change without notice
 local
+id btnCamera
+id btnGallery
+id btnLogin
+id etNewPassword
+id etNewUsername
+id etPassword
+id etUsername
+id tilPassword
+id tilUsername
+id tvRegister
+id tvSubtitle
+id tvTitle
+id tvUserGreeting
+id tvWelcome
+layout activity_home
+layout activity_login
+layout dialog_register
 string app_name
 style Theme.VectorScan
 xml backup_rules
 xml data_extraction_rules
+xml file_paths
