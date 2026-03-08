@@ -1,57 +1,55 @@
 package com.example.vectorscan;
 
 import android.Manifest;
-import android.content.ContentValues;
-import android.content.Intent;
+import android.content.*;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.activity.result.ActivityResultLauncher;
+import android.os.*;
+import android.widget.*;
+import androidx.activity.result.*;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-
+import androidx.core.content.*;
 import com.google.android.material.button.MaterialButton;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.io.*;
+import java.text.*;
+import java.util.*;
+import okhttp3.*;
 
 public class HomeActivity extends AppCompatActivity {
 
     private Uri photoUri;
+    private File photoFile;
 
-    // Modern camera launcher (replaces deprecated startActivityForResult)
     private final ActivityResultLauncher<Uri> cameraLauncher =
             registerForActivityResult(new ActivityResultContracts.TakePicture(), success -> {
-                if (success && photoUri != null) {
-                    Toast.makeText(this, "Foto guardada en: " + photoUri, Toast.LENGTH_LONG).show();
+                if (success && photoFile != null) {
+
+                    enviarImagenAServidor(photoFile);
+
                 } else {
                     Toast.makeText(this, "Captura cancelada", Toast.LENGTH_SHORT).show();
                 }
             });
 
-    // Modern gallery picker (replaces deprecated startActivityForResult)
     private final ActivityResultLauncher<String> galleryLauncher =
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
                 if (uri != null) {
-                    Toast.makeText(this, "Imagen seleccionada: " + uri, Toast.LENGTH_LONG).show();
-                    // The selected image URI is available here for future processing
+
+                    String path = FileUtils.getPath(this, uri);
+
+                    if (path != null) {
+                        File f = new File(path);
+                        enviarImagenAServidor(f);
+                    } else {
+                        Toast.makeText(this, "No se pudo leer la imagen", Toast.LENGTH_SHORT).show();
+                    }
+
                 } else {
                     Toast.makeText(this, "No se seleccionó ninguna imagen", Toast.LENGTH_SHORT).show();
                 }
             });
 
-    // Permission launcher for camera
     private final ActivityResultLauncher<String> cameraPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted -> {
                 if (granted) {
@@ -66,7 +64,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Set welcome message with username
         String username = getIntent().getStringExtra("username");
         TextView tvWelcome = findViewById(R.id.tvWelcome);
         if (username != null) {
@@ -77,7 +74,6 @@ public class HomeActivity extends AppCompatActivity {
         MaterialButton btnGallery = findViewById(R.id.btnGallery);
 
         btnCamera.setOnClickListener(v -> {
-            // Check camera permission
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                     == PackageManager.PERMISSION_GRANTED) {
                 openCamera();
@@ -93,13 +89,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private void openCamera() {
         try {
-            File photoFile = createImageFile();
-            photoUri = FileProvider.getUriForFile(this,
-                    "com.example.vectorscan.fileprovider", photoFile);
+            photoFile = createImageFile();
+            photoUri = FileProvider.getUriForFile(this, "com.example.vectorscan.fileprovider", photoFile);
             cameraLauncher.launch(photoUri);
         } catch (IOException ex) {
             Toast.makeText(this, "Error al crear archivo de imagen", Toast.LENGTH_SHORT).show();
-            ex.printStackTrace();
         }
     }
 
@@ -108,5 +102,46 @@ public class HomeActivity extends AppCompatActivity {
         String imageFileName = "SCAN_" + timeStamp;
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(imageFileName, ".jpg", storageDir);
+    }
+
+    private void enviarImagenAServidor(File f) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody fileBody = RequestBody.create(f, MediaType.parse("image/jpeg"));
+
+        MultipartBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", f.getName(), fileBody)
+                .build();
+
+        Request request = new Request.Builder()
+                .url("http://10.0.2.2:8000/predict")
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+                runOnUiThread(() ->
+                        Toast.makeText(HomeActivity.this, "Error conectando con IA", Toast.LENGTH_LONG).show()
+                );
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String respuesta = response.body().string();
+
+                runOnUiThread(() ->
+                        Toast.makeText(HomeActivity.this, "Predicción completada", Toast.LENGTH_LONG).show()
+                );
+
+                System.out.println(respuesta);
+            }
+        });
     }
 }

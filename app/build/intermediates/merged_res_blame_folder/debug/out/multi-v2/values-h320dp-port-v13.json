@@ -4,7 +4,7 @@
             "outputFile": "com.example.vectorscan.app-mergeDebugResources-29:/values-h320dp-port-v13/values-h320dp-port-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\jorge\\.gradle\\caches\\9.0-milestone-1\\transforms\\d15ae7d6be61434efc94b8fce9f909d1\\transformed\\material-1.11.0\\res\\values-h320dp-port-v13\\values-h320dp-port-v13.xml",
+                    "source": "C:\\Users\\gatos\\.gradle\\caches\\9.0-milestone-1\\transforms\\d15ae7d6be61434efc94b8fce9f909d1\\transformed\\material-1.11.0\\res\\values-h320dp-port-v13\\values-h320dp-port-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

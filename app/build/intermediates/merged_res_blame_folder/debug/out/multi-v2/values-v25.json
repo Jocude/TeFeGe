@@ -4,7 +4,7 @@
             "outputFile": "com.example.vectorscan.app-mergeDebugResources-29:/values-v25/values-v25.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\jorge\\.gradle\\caches\\9.0-milestone-1\\transforms\\9823eabf4548fdd30d2ac029d58151cb\\transformed\\appcompat-1.6.1\\res\\values-v25\\values-v25.xml",
+                    "source": "C:\\Users\\gatos\\.gradle\\caches\\9.0-milestone-1\\transforms\\9823eabf4548fdd30d2ac029d58151cb\\transformed\\appcompat-1.6.1\\res\\values-v25\\values-v25.xml",
                     "from": {
                         "startLines": "2,3,4,6",
                         "startColumns": "4,4,4,4",

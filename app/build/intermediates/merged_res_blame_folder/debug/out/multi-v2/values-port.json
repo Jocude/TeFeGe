@@ -4,7 +4,7 @@
             "outputFile": "com.example.vectorscan.app-mergeDebugResources-29:/values-port/values-port.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\jorge\\.gradle\\caches\\9.0-milestone-1\\transforms\\9823eabf4548fdd30d2ac029d58151cb\\transformed\\appcompat-1.6.1\\res\\values-port\\values-port.xml",
+                    "source": "C:\\Users\\gatos\\.gradle\\caches\\9.0-milestone-1\\transforms\\9823eabf4548fdd30d2ac029d58151cb\\transformed\\appcompat-1.6.1\\res\\values-port\\values-port.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
